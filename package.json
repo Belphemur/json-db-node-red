@@ -1,0 +1,22 @@
+{
+  "name": "json-db-node-red",
+  "version": "0.0.1",
+  "description": "Node-RED Node to store/retrieve easily information stored into .json file",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Belphemur/json-db-node-red.git"
+  },
+  "keywords": [
+    "data",
+    "node-red",
+    "json"
+  ],
+  "author": "Antoine Aflalo <antoineaf+npm@admincmd.com>",
+  "license": "GPLv3",
+  "homepage": "https://github.com/Belphemur/json-db-node-red",
+  "node-red"     : {
+        "nodes": {
+            "json-db": "json-db.js"
+        }
+    }
+}
