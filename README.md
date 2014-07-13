@@ -1,3 +1,5 @@
+[![NPM](https://nodei.co/npm/json-db-node-red.png?downloads=true)](https://nodei.co/npm/json-db-node-red/)
+
 json-db-node-red
 ================
 
