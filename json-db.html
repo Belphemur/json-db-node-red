@@ -34,6 +34,7 @@
 <div class="form-tips">By default, the node will override the old data with the new one. If you check "Merge Data", it will merge the new one with the old one and save it.</div>
 
 
+
 </script>
 <script type="text/x-red" data-template-name="DataOut">
     <div class="form-row" id="node-input-server-row">
@@ -48,6 +49,15 @@
         <label for="node-input-path"><i class="icon-floppy-save"></i> Data Path</label>
         <input type="text" id="node-input-path" placeholder="/">
     </div>
+    <div class="form-row">
+        <input type="checkbox" style="display: inline-block; width: auto; vertical-align: top;" id="node-input-error" />
+        <label style="width: auto;" for="node-input-error"><i class="icon-log-in"></i>Always send the message</label>
+    </div>
+<div class="form-tips">When the DataPath doesn't exists, the Node will trigger an error and will stop the flow unless you checked "Always send the message".
+The message sent will contain a <code>msg.error</code> with the error.</div>
+
+
+
 </script>
 <script type="text/x-red" data-help-name="DataIn">
 <p>Use DataIn to <b>store</b> data into the Json-DB.</p>
@@ -70,13 +80,16 @@ You select which collection you want to use and the path to the object.</p>
 <p>To change "Second" : <code>/test2</code></p>
 <p>You can also get the whole data by just setting <code>/</code> as DataPath</p>
 
+
 </script>
- <script type="text/x-red" data-help-name="DataOut">
+<script type="text/x-red" data-help-name="DataOut">
 <p>Use DataOut to <b>retrieve</b> data from the Json-DB.</p>
 <p>The DataOut node is used to retrieve information into the chosen collection.
 You select which collection you want to use and the path to the object.</p>
 <p>The path can be overridden with the <code>msg.datapath</code>.</p>
 <p><code>The msg.payload</code> will contain the data retrieved from the Json-DB.</p>
+<p>In case of error and if you check "Always send the message", the <code>msg.error</code> will contain the error that has been triggered.
+The rest of the properties of the msg will stay unchanged</p>
 <p>The DataPath represent the path through the object. If the DataPath doesn't exists, an <b>Error</b> will be thrown.</p>
 <code>
 {
@@ -90,6 +103,7 @@ You select which collection you want to use and the path to the object.</p>
 <p>To change the "First" you have to set as Data Path : <code>/test/data</code></p>
 <p>To change "Second" : <code>/test2</code></p>
 <p>You can also get the whole data by just setting <code>/</code> as DataPath</p>
+
 
 </script>
 
@@ -107,6 +121,7 @@ You select which collection you want to use and the path to the object.</p>
         <label style="width: auto;" for="node-config-input-save"><i class="icon-log-in"></i>Direct save on file</label>
     </div>
     <div class="form-tips">By default, the node will save the collection on the file after you push new data. The collection can't contain any whitespace.</div>
+
 
 </script>
 
@@ -151,7 +166,8 @@ You select which collection you want to use and the path to the object.</p>
         defaults: {
             collection: {type: "json-db-collection", required: true},
             name: {value: ""},
-            path: {value: '/', required: true}
+            path: {value: '/', required: true},
+            error: {value: false, required: true}
         },
         color: "#6699FF",
         inputs: 1,

@@ -61,6 +61,7 @@ module.exports = function (RED) {
          */
         this.collection = RED.nodes.getNode(n.collection);
         this.dataPath = n.path;
+        this.sendError = n.error;
         var node = this;
 
         this.on("input", function (msg) {
@@ -71,6 +72,10 @@ module.exports = function (RED) {
                 node.send(msg);
             } catch (error) {
                 node.error(error);
+                if (node.sendError) {
+                    msg.error = error;
+                    node.send(msg);
+                }
             }
         });
 
