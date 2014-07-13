@@ -89,7 +89,8 @@ You select which collection you want to use and the path to the object.</p>
 <p>The path can be overridden with the <code>msg.datapath</code>.</p>
 <p><code>The msg.payload</code> will contain the data retrieved from the Json-DB.</p>
 <p>In case of error and if you check "Always send the message", the <code>msg.error</code> will contain the error that has been triggered.
-The rest of the properties of the msg will stay unchanged</p>
+The rest of the properties of the msg will stay unchanged. If you activated the <i>Status</i> in the configuration panel of Node-RED, you'll
+be able to see directly the last Error message on top of the node.</p>
 <p>The DataPath represent the path through the object. If the DataPath doesn't exists, an <b>Error</b> will be thrown.</p>
 <code>
 {

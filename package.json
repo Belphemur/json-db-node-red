@@ -1,6 +1,6 @@
 {
     "name": "json-db-node-red",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "Node-RED Node to store/retrieve easily information stored into .json file",
     "repository": {
         "type": "git",

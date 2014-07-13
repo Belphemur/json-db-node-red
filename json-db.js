@@ -69,12 +69,16 @@ module.exports = function (RED) {
             try {
                 var data = node.collection.db.getData(path);
                 msg.payload = data;
+                node.status({fill: "green", shape: "dot", text: "No Error"});
                 node.send(msg);
             } catch (error) {
-                node.error(error);
                 if (node.sendError) {
-                    msg.error = error;
+                    msg.error = error.toString();
                     node.send(msg);
+                    node.status({fill: "yellow", shape: "ring", text: error.toString()});
+                } else {
+                    node.error(error);
+                    node.status({fill: "red", shape: "dot", text: error.toString()});
                 }
             }
         });
