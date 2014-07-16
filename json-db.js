@@ -24,7 +24,7 @@ module.exports = function (RED) {
         this.db = new JsonDB("JsonDB_" + n.collection, n.save);
 
         this.on("close", function () {
-            this.db.save(true);
+            this.db.save();
         });
     }
 
