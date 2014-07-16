@@ -22,9 +22,11 @@ module.exports = function (RED) {
     function JsonDBCollection(n) {
         RED.nodes.createNode(this, n);
         this.db = new JsonDB("JsonDB_" + n.collection, n.save);
-
         this.on("close", function () {
-            this.db.save();
+            try {
+                this.db.save();
+            } catch (error) {
+            }
         });
     }
 
@@ -32,9 +34,6 @@ module.exports = function (RED) {
 
     function DataIn(n) {
         RED.nodes.createNode(this, n);
-        /**
-         * @var JsonDB
-         */
         this.collection = RED.nodes.getNode(n.collection);
         this.dataPath = n.path;
         this.override = !n.update;
