@@ -1,6 +1,6 @@
 {
     "name": "json-db-node-red",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "description": "Node-RED Node to store/retrieve easily information stored into .json file",
     "repository": {
         "type": "git",
@@ -15,7 +15,7 @@
     "license": "GPLv3",
     "homepage": "https://github.com/Belphemur/json-db-node-red",
     "dependencies": {
-        "node-json-db": "0.4.x"
+        "node-json-db": "0.6.x"
     },
     "node-red": {
         "nodes": {
