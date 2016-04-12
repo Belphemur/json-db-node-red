@@ -16,3 +16,8 @@ The DataOut node is used to retrieve the information from the chosen collection.
 In case you want a message to still be processed in case of error, you can activate this in the DataOut node.
 The Message won't be changed, and a **msg.error** will be added containing the error. 
 If you activate the Status, you'll also see the error message.
+
+## Examples
+Node-RED should import in the library the example flow that looks like this:
+
+[![Example Flow](http://i.imgur.com/nRqAS6I.jpg)]
