@@ -17,11 +17,23 @@
 module.exports = function (RED) {
     "use strict";
     var fs = require("fs");
+    var path = require("path");
     var JsonDB = require("node-json-db");
+    var defaultPath = path.join(RED.settings.userDir, "JsonDB");
 
     function JsonDBCollection(n) {
         RED.nodes.createNode(this, n);
-        this.db = new JsonDB("JsonDB_" + n.collection, n.save);
+        var collectionFilePath = path.join(defaultPath, n.collection + ".json");
+        try {
+            var oldFile = path.join(process.cwd(), "JsonDB_" + n.collection + ".json");
+            var stats = fs.statSync(oldFile);
+            fs.mkdirSync(defaultPath, 775);
+            fs.renameSync(oldFile, collectionFilePath);
+            this.log("Moved old file from '" + oldFile + "' to '" + collectionFilePath + '"');
+        } catch (error) {
+
+        }
+        this.db = new JsonDB(collectionFilePath, n.save);
         this.on("close", function () {
             try {
                 this.db.save();
