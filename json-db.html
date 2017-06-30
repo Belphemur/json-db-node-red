@@ -59,6 +59,30 @@ The message sent will contain a <code>msg.error</code> with the error.</div>
 
 
 </script>
+<script type="text/x-red" data-template-name="DataRecovery">
+    <div class="form-row" id="node-input-server-row">
+        <label for="node-input-collection"><i class="icon-tasks"></i> Collection</label>
+        <input type="text" id="node-input-collection">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-flag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Node-RED">
+    </div>
+    <div class="form-row">
+        <label for="node-input-path"><i class="icon-floppy-save"></i> Data Path</label>
+        <input type="text" id="node-input-path" placeholder="/">
+    </div>
+    <div class="form-row">
+        <input type="checkbox" style="display: inline-block; width: auto; vertical-align: top;" id="node-input-update" />
+        <label style="width: auto;" for="node-input-update"><i class="icon-log-in"></i>Merge Data</label>
+    </div>
+    <div class="form-row">
+        <input type="checkbox" style="display: inline-block; width: auto; vertical-align: top;" id="node-input-error" />
+        <label style="width: auto;" for="node-input-error"><i class="icon-log-in"></i>Always send the message</label>
+    </div>
+<div class="form-tips">When the DataPath doesn't exists, the Node will trigger an error and will stop the flow unless you checked "Always send the message".
+The message sent will contain a <code>msg.error</code> with the error.</div>
+</script>
 <script type="text/x-red" data-help-name="DataIn">
 <p>Use DataIn to <b>store</b> data into the Json-DB.</p>
 <p>The DataIn node is used to store information into the chosen collection.
@@ -88,6 +112,31 @@ You select which collection you want to use and the path to the object.</p>
 You select which collection you want to use and the path to the object.</p>
 <p>The path can be overridden with the <code>msg.datapath</code>.</p>
 <p><code>The msg.payload</code> will contain the data retrieved from the Json-DB.</p>
+<p>In case of error and if you check "Always send the message", the <code>msg.error</code> will contain the error that has been triggered.
+The rest of the properties of the msg will stay unchanged. If you activated the <i>Status</i> in the configuration panel of Node-RED, you'll
+be able to see directly the last Error message on top of the node.</p>
+<p>The DataPath represent the path through the object. If the DataPath doesn't exists, an <b>Error</b> will be thrown.</p>
+<code>
+{
+    test:
+        {
+            data: "First"
+        },
+    test2 : "Second"
+}
+</code>
+<p>To change the "First" you have to set as Data Path : <code>/test/data</code></p>
+<p>To change "Second" : <code>/test2</code></p>
+<p>You can also get the whole data by just setting <code>/</code> as DataPath</p>
+
+
+</script>
+<script type="text/x-red" data-help-name="DataRecovery">
+<p>Use DataRecovery to <b>persist/recover on startup</b> data from the Json-DB.</p>
+<p>The DataRecovery node is used to store/retrieve information into the chosen collection.
+You select which collection you want to use and the path to the object.</p>
+<p><code>The msg.payload</code> of the output will contain the data retrieved from the Json-DB.</p>
+<p>If you chose to merge the data, the node will automatically merge Arrays with others Arrays and Objects with others Objects. You can't merge Array with Object and vice versa</p>
 <p>In case of error and if you check "Always send the message", the <code>msg.error</code> will contain the error that has been triggered.
 The rest of the properties of the msg will stay unchanged. If you activated the <i>Status</i> in the configuration panel of Node-RED, you'll
 be able to see directly the last Error message on top of the node.</p>
@@ -163,6 +212,26 @@ be able to see directly the last Error message on top of the node.</p>
 
     });
     RED.nodes.registerType('DataOut', {
+        category: 'storage-output',
+        defaults: {
+            collection: {type: "json-db-collection", required: true},
+            name: {value: ""},
+            path: {value: '/', required: true},
+            error: {value: false, required: true}
+        },
+        color: "#6699FF",
+        inputs: 1,
+        outputs: 1,
+        icon: "json-db-out.png",
+        label: function () {
+            return this.name || this.path;
+        },
+        labelStyle: function () {
+            return this.name ? "node_label_italic" : "";
+        }
+
+    });
+	RED.nodes.registerType('DataRecovery', {
         category: 'storage-output',
         defaults: {
             collection: {type: "json-db-collection", required: true},
