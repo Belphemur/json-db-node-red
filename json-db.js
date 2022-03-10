@@ -18,7 +18,7 @@ module.exports = function (RED) {
     "use strict";
     var fs = require("fs");
     var path = require("path");
-    var JsonDB = require("node-json-db");
+    var {JsonDB} = require("node-json-db");
     var defaultPath = path.join(RED.settings.userDir, "JsonDB");
 
     function JsonDBCollection(n) {
