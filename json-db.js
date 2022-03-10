@@ -38,7 +38,7 @@ module.exports = function (RED) {
         } catch (error) {
 
         }
-        this.db = new JsonDB(collectionFilePath, n.save);
+        this.db = new JsonDB(collectionFilePath, n.save, false, '/', n.sync);
         this.on("close", function () {
             try {
                 this.db.save();

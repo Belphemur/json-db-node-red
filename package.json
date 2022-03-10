@@ -15,7 +15,7 @@
     "license": "GPLv3",
     "homepage": "https://github.com/Belphemur/json-db-node-red",
     "dependencies": {
-        "node-json-db": "1.4.x"
+        "node-json-db": "1.5.x"
     },
     "node-red": {
         "nodes": {
