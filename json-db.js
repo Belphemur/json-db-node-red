@@ -18,7 +18,7 @@ module.exports = function (RED) {
     "use strict";
     var fs = require("fs");
     var path = require("path");
-    var JsonDB = require("node-json-db");
+    var {JsonDB} = require("node-json-db");
     var defaultPath = path.join(RED.settings.userDir, "JsonDB");
 
     function JsonDBCollection(n) {
@@ -38,7 +38,7 @@ module.exports = function (RED) {
         } catch (error) {
 
         }
-        this.db = new JsonDB(collectionFilePath, n.save);
+        this.db = new JsonDB(collectionFilePath, n.save, false, '/', n.sync);
         this.on("close", function () {
             try {
                 this.db.save();

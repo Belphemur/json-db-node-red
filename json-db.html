@@ -122,6 +122,12 @@ be able to see directly the last Error message on top of the node.</p>
         <label style="width: auto;" for="node-config-input-save"><i class="icon-log-in"></i>Direct save on file</label>
     </div>
     <div class="form-tips">By default, the node will save the collection on the file after you push new data. The collection can't contain any whitespace.</div>
+    </div>
+        <div class="form-row">
+        <input type="checkbox" style="display: inline-block; width: auto; vertical-align: top;" id="node-config-input-sync" />
+        <label style="width: auto;" for="node-config-input-sync"><i class="icon-log-in"></i>Sync on save</label>
+    </div>
+    <div class="form-tips">By default, the node simply write the collection but won't force a filesystem sync.</div>
 
 
 </script>
@@ -133,7 +139,8 @@ be able to see directly the last Error message on top of the node.</p>
         defaults: {
             name: {value: ""},
             collection: {required: true, validate: RED.validators.regex(/^[a-zA-Z0-9-_]+$/)},
-            save: {value: true, required: true}
+            save: {value: true, required: true},
+            sync: {value: false, required: true}
         },
         label: function () {
             return this.name || this.collection;
