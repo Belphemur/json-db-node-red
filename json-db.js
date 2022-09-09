@@ -103,5 +103,47 @@ module.exports = function (RED) {
 
     RED.nodes.registerType("DataOut", DataOut);
 
+    function DataRecovery(n) {
+        RED.nodes.createNode(this, n);
+        this.collection = RED.nodes.getNode(n.collection);
+        this.dataPath = n.path;
+        this.override = !n.update;
+        var node = this;
+
+		node.on('startup', function (msg) {
+            var path = node.dataPath;
+            try {
+                var data = node.collection.db.getData(path);
+                msg.payload = data;
+                node.status({fill: "green", shape: "dot", text: "No Error"});
+                node.send(msg);
+            } catch (error) {
+                if (node.sendError) {
+                    msg.error = error.toString();
+                    node.send(msg);
+                    node.status({fill: "yellow", shape: "ring", text: error.toString()});
+                } else {
+                    node.error(error);
+                    node.status({fill: "red", shape: "dot", text: error.toString()});
+                }
+            }
+        });
+
+        setTimeout(function () {
+            node.emit('startup', {});
+        }, 3000);
+
+        this.on("input", function (msg) {
+            var path = node.dataPath;
+            try {
+                node.collection.db.push(path, msg.payload, node.override);
+            } catch (error) {
+                node.error(error);
+            }
+        });
+
+    }
+
+    RED.nodes.registerType("DataRecovery", DataRecovery);
 }
 
